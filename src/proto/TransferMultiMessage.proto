@@ -1,0 +1,37 @@
+syntax = "proto2";
+
+package com.sen.proto;
+option optimize_for = SPEED;
+option java_package = "com.sen.netty.lecture.seventh.example";
+option java_outer_classname = "TransferMultiMessage";
+
+message MyMessage{
+   enum DataType{
+     StudentType = 1;
+     DogType = 2;
+     CatType = 3;
+   }
+
+   required DataType date_type = 1;
+   oneof Multi{
+      Student student = 2;
+      Dog dog = 3;
+      Cat cat = 4;
+   }
+}
+
+message Student{
+  optional string name = 1;
+  optional string addresses = 2;
+  optional int32 age = 3;
+}
+
+message Dog{
+  optional string name = 1;
+  optional int32 weight = 2;
+}
+
+message Cat{
+  optional string name = 1;
+  optional string color = 2;
+}
