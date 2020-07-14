@@ -1,13 +1,5 @@
 package com.sen.grpc;
 
-import com.sen.proto.MyRequest;
-import com.sen.proto.MyResponse;
-import com.sen.proto.StreamRequest;
-import com.sen.proto.StreamResponse;
-import com.sen.proto.StudentList;
-import com.sen.proto.StudentRequest;
-import com.sen.proto.StudentResponse;
-import com.sen.proto.StudentServiceGrpc;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import io.grpc.stub.StreamObserver;
