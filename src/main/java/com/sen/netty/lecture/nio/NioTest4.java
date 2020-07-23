@@ -10,7 +10,7 @@ import java.nio.channels.FileChannel;
  * @date 2020/7/23 00:13
  * @description
  */
-public class NioTes4 {
+public class NioTest4 {
 
     public static void main(String[] args) throws Exception{
         FileInputStream fileInputStream = new FileInputStream("input.txt");
