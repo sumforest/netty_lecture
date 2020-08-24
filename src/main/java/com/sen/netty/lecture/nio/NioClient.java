@@ -45,6 +45,7 @@ public class NioClient {
                         if (client.isConnectionPending()) {
                             // 连接服务器的客户单通道处于正在连接的状态，建立连接
                             client.finishConnect();
+                            client.configureBlocking(false);
 
                             // 想服务端发送客户单一连接的消息
                             ByteBuffer byteBuffer = ByteBuffer.allocate(1024);
@@ -56,24 +57,40 @@ public class NioClient {
                             ExecutorService executorService = Executors.newSingleThreadExecutor(Executors.defaultThreadFactory());
                             executorService.submit(() -> {
                                 try {
-                                    byteBuffer.clear();
-                                    InputStreamReader reader = new InputStreamReader(System.in);
-                                    BufferedReader bufferedReader = new BufferedReader(reader);
+                                    while (true) {
+                                        System.out.println("线程：" + Thread.currentThread().getName());
+                                        byteBuffer.clear();
+                                        InputStreamReader reader = new InputStreamReader(System.in);
+                                        BufferedReader bufferedReader = new BufferedReader(reader);
 
-                                    String message = bufferedReader.readLine();
-                                    byteBuffer.put(message.getBytes());
-                                    byteBuffer.flip();
-                                    client.write(byteBuffer);
+                                        String message = bufferedReader.readLine();
+                                        byteBuffer.put(message.getBytes());
+                                        byteBuffer.flip();
+                                        client.write(byteBuffer);
+                                    }
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }
                             });
+
+                            // 注册一个可读事件
+                            client.register(selector, SelectionKey.OP_READ);
+                        }
+                    } else if (selectionKey.isReadable()) {
+                        SocketChannel client = (SocketChannel) selectionKey.channel();
+                        // 从channel里面读取消息
+                        ByteBuffer buffer = ByteBuffer.allocate(1024);
+                        int read = client.read(buffer);
+                        if (read > 0) {
+                            String receiveMessage = new String(buffer.array(), 0, read);
+                            System.out.println(client + ":" + receiveMessage);
                         }
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             });
+            selectionKeys.clear();
         }
     }
 }
