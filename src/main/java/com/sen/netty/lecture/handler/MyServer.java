@@ -21,7 +21,7 @@ public class MyServer {
         ServerBootstrap serverBootstrap = new ServerBootstrap();
         serverBootstrap.group(bossGroup,workerGroup)
                 .channel(NioServerSocketChannel.class)
-                .handler(new MyServerInitializer());
+                .childHandler(new MyServerInitializer());
         try {
             // 绑定本机8899端口启动，一直等到事件返回
             ChannelFuture channelFuture = serverBootstrap.bind(8899).sync();

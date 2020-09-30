@@ -14,6 +14,10 @@ public class MyClientInitializer extends ChannelInitializer<SocketChannel> {
     @Override
     protected void initChannel(SocketChannel ch) throws Exception {
         ChannelPipeline pipeline = ch.pipeline();
+        // 添加自定义解码器
+        pipeline.addLast(new MyByteToLongDecoder());
+        // 添加自定义编码器
+        pipeline.addLast(new MyLongToByEncoder());
         pipeline.addLast(new MyClientHandler());
     }
 }

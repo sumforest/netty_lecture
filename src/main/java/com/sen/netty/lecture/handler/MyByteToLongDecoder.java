@@ -16,6 +16,7 @@ public class MyByteToLongDecoder extends ByteToMessageDecoder {
     @Override
     protected void decode(ChannelHandlerContext ctx, ByteBuf in, List<Object> out) throws Exception {
         System.out.println("decode in active");
+        System.out.println("readableBytes:" + in.readableBytes());
         // long类型为8个字节
         if (in.readableBytes() >= 8) {
             out.add(in.readLong());
