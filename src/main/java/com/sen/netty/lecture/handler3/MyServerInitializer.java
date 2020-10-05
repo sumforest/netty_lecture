@@ -1,4 +1,4 @@
-package com.sen.netty.lecture.handler;
+package com.sen.netty.lecture.handler3;
 
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
@@ -6,21 +6,16 @@ import io.netty.channel.socket.SocketChannel;
 
 /**
  * @author sen
- * @date 2020/9/27 23:51
+ * @date 2020/10/5 15:53
  * @description
  */
 public class MyServerInitializer extends ChannelInitializer<SocketChannel> {
 
-
     @Override
     protected void initChannel(SocketChannel ch) throws Exception {
         ChannelPipeline pipeline = ch.pipeline();
-        // 添加自定义解码器
-        pipeline.addLast(new MyByteToLongDecoder2());
-        pipeline.addLast(new MyLongToStringDecoder());
-        // 添加自定义编码器
-        pipeline.addLast(new MyLongToByEncoder());
-        //  添加自定义处理器
+        pipeline.addLast(new MyPersonDecoder());
+        pipeline.addLast(new MyPerSonEncoder());
         pipeline.addLast(new MyServerHandler());
     }
 }

@@ -8,11 +8,11 @@ import io.netty.channel.SimpleChannelInboundHandler;
  * @date 2020/9/27 23:52
  * @description
  */
-public class MyServerHandler extends SimpleChannelInboundHandler<Long> {
+public class MyServerHandler extends SimpleChannelInboundHandler<String> {
 
     @Override
-    protected void channelRead0(ChannelHandlerContext ctx, Long msg) throws Exception {
+    protected void channelRead0(ChannelHandlerContext ctx, String msg) throws Exception {
         System.out.println("from client: " + msg);
-        // ctx.channel().writeAndFlush(123456L);
+        ctx.channel().writeAndFlush(654321L);
     }
 }
